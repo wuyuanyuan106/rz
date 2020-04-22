@@ -1,0 +1,41 @@
+server:
+  port: 10010
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      default-filters:
+        - AddResponseHeader=X-Response-Default-Myname,wuyuanyuan
+      routes:
+        - id: user-service-route
+          uri: lb://user-service
+          predicates:
+            - Path=/api/user/**
+          filters:
+#            - PrefixPath=/user  #表示添加一个路径
+            - StripPrefix=1 #过滤一个路径
+#        - id: consumer-route
+#          uri: lb://consumer-demo
+#          predicates:
+#            - Path=/cf/**
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka,http://127.0.0.1:10087/eureka
+    instance:
+      prefer-ip-address: true
+hystrix: #Gateway中默认就已经集成了Ribbon负载均衡和Hystrix熔断机制。但是所有的超时策略都是走的默认值，比如熔断 超时时间只有1S，很容易就触发了
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1000
+
+ribbon:
+  ConnectTimeout: 1000
+  ReadTimeout: 2000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 0
+

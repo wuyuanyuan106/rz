@@ -1,0 +1,40 @@
+server:
+  port: 80
+spring:
+  application:
+    name: consumer-demo
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka,http://127.0.0.1:10087/eureka
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 2000
+      circuitBreaker:
+        requestVolumeThreshold: 10 # 熔断触发小请求次数，默认值是20
+        sleepWindowInMilliseconds: 10000 # 熔断后休眠时长，默认值5秒
+        errorThresholdPercentage: 50 # 触发熔断错误比例阈值，默认值50%
+ribbon:
+  ReadTimeout: 2000 # 读取超时时长
+  ConnectTimeout: 1000 # 建立链接的超时时长
+  MaxAutoRetries: 0 # 当前服务器的重试次数
+  MaxAutoRetriesNextServer: 0 # 重试多少次服务
+  OkToRetryOnAllOperations: false # 是否对所有的请求方式都重试
+feign:
+  hystrix:
+    enabled: true
+  compression:
+    request:
+      enabled: true #开启请求压缩
+      mime-types: text/html,application/xml,application/json # 设置压缩的数据类型
+      min-request-size: 2048 # 设置触发压缩的大小下限(默认值)
+
+    response:
+      enabled: true #开启响应压缩
+logging:
+  level:
+    com.itheima: debug

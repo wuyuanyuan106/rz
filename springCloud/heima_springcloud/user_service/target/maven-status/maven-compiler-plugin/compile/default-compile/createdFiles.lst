@@ -1,0 +1,5 @@
+com\itheima\user_service\Application.class
+com\itheima\user_service\mapper\UserMapper.class
+com\itheima\user_service\controller\UserController.class
+com\itheima\user_service\service\UserService.class
+com\itheima\user_service\domain\User.class

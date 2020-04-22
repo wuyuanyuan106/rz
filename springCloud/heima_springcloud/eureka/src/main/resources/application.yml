@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: eureka-server  #当前应用的名称，一般和项目名保持一致
+server:
+  port: ${port:10086}  #项目的端口
+eureka:
+  client:
+    service-url:
+      defaultZone: ${defaultZone:http://127.0.0.1:10086/eureka}  #EurekaServer的访问地址
+#    register-with-eureka: false #是否要将自己注册到EurekaServer，默认是true
+#    fetch-registry: false  # 是否从EurekaServer中拉取服务地址,默认是true
